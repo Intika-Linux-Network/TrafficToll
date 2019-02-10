@@ -12,7 +12,8 @@ setup(
     install_requires=['psutil', 'loguru', 'ruamel.yaml'],
     entry_points={
         'console_scripts': [
-            'tt = traffictoll.cli:cli_main'
+            'tt = traffictoll.cli:cli_main',
+            'tt-gui = traffictoll.gui.application:start'
         ]
     }
 )

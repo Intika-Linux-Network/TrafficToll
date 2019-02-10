@@ -3,6 +3,7 @@ import shlex
 import shutil
 import subprocess
 
+import psutil
 from loguru import logger
 
 
@@ -20,3 +21,8 @@ def run(command, **kwargs):
 
     logger.debug(command)
     return subprocess.run([executable_path] + args, **kwargs)
+
+
+def get_process_tree(root=1):
+    process = psutil.Process(root)
+    return {process: {child: get_process_tree(child.pid) for child in process.children()}}
