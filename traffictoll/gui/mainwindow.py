@@ -7,22 +7,28 @@ from traffictoll.gui.views.mainwindow import Ui_MainWindow
 
 
 class LeafSortFilterProxyModel(QSortFilterProxyModel):
-    def filterAcceptsRow(self, row, parent):
-        if super().filterAcceptsRow(row, parent):
+    def filterAcceptsRow(self, source_row, source_parent):
+        if super().filterAcceptsRow(source_row, source_parent):
             return True
 
-        # Check if any ancestors accepts the filter
+        # Check if any ancestors accept the filter
+        parent = source_parent
         while parent.isValid():
             if super().filterAcceptsRow(parent.row(), parent.parent()):
                 return True
             parent = parent.parent()
 
-        # Check if any descendants accepts the filter
+        # Check if any descendants accept the filter
         model = self.sourceModel()
-        index = model.index(row, 0, parent)
-        for row in range(model.rowCount(index)):
-            if super().filterAcceptsRow(row, index):
-                return True
+
+        children_indices = [model.index(source_row, 0, source_parent)]
+        while children_indices:
+            child_index = children_indices.pop()
+            for row in range(model.rowCount(child_index)):
+                if super().filterAcceptsRow(row, child_index):
+                    return True
+
+                children_indices.append(model.index(row, 0, child_index))
 
         return False
 
