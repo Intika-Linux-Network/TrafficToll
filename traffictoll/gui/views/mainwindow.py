@@ -2,11 +2,12 @@
 
 # Form implementation generated from reading ui file '/home/user/Documents/Code/TrafficToll/traffictoll/gui/views/mainwindow.ui'
 #
-# Created by: PyQt5 UI code generator 5.11.3
+# Created by: PyQt5 UI code generator 5.12
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -19,6 +20,9 @@ class Ui_MainWindow(object):
         self.verticalLayout = QtWidgets.QVBoxLayout()
         self.verticalLayout.setObjectName("verticalLayout")
         self.processes = QtWidgets.QTreeView(self.centralwidget)
+        self.processes.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+        self.processes.setAlternatingRowColors(True)
+        self.processes.setSortingEnabled(True)
         self.processes.setObjectName("processes")
         self.verticalLayout.addWidget(self.processes)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
@@ -44,6 +48,7 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuFile.menuAction())
 
         self.retranslateUi(MainWindow)
+        self.actionExit.triggered.connect(MainWindow.close)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -52,4 +57,6 @@ class Ui_MainWindow(object):
         self.search.setPlaceholderText(_translate("MainWindow", "Search..."))
         self.menuFile.setTitle(_translate("MainWindow", "Fi&le"))
         self.actionExit.setText(_translate("MainWindow", "Exit"))
+        self.actionExit.setShortcut(_translate("MainWindow", "Ctrl+Q"))
+
 
